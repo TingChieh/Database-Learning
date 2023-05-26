@@ -1,0 +1,57 @@
+SELECT CURRENT_DATE() FROM DUAL;
+
+-- CURRENT_TIMESTAMP( ) 当前时间戳 
+SELECT CURRENT_TIMESTAMP FROM DUAL;
+
+-- CURRENT_TIME 当前时间   
+SELECT CURRENT_TIME() FROM DUAL;
+
+CREATE TABLE mes(
+    id INT,
+    content VARCHAR(30),
+    send_time DATETIME
+    );
+
+INSERT INTO mes
+    VALUES(1, '北京新闻', CURRENT_TIMESTAMP());
+
+INSERT INTO mes
+    VALUES(2, '上海新闻', NOW());
+INSERT INTO mes
+    VALUES(3, 'six 新闻', NOW());
+
+SELECT * FROM mes;
+SELECT NOW() FROM DUAL;
+
+-- 上应用实例
+-- 显示所有新闻信息，发布日期只显示日期，不用显示时间.
+SELECT id, content, DATA(send_time) FROM mes;
+
+-- 请查询在10分钟内发布的帖子
+SELECT * FROM mes 
+    WHERE DATE_ADD(send_time, INTERVAL 10 MINUTE) >= NOW();
+
+SELECT * FROM mes 
+    WHERE send_time >= DATE_SUB(NOW(), INTERVAL 10 MINUTE);
+
+-- 请在mysq1l的sql语句中求出2011-11-11 和1990-1-1 相差多少天
+SELECT DATEDIFF('2011-11-11', '1990-1-1') FROM DUAL;
+
+-- 请用mysql的sql 语句求出你活了多少天? [练习]
+SELECT DATEDIFF(NOW(), '2003-7-7') FROM DUAL;
+
+-- 如果你能活80岁，求出你还能活多少天. [练习]
+SELECT DATEDIFF(DATE_ADD('2003-7-7', INTERVAL 80 YEAR), NOW()) FROM DUAL;
+
+-- YEAR | MONTH | DATE (datetime)
+SELECT YEAR(NOW()) FROM DUAL;
+SELECT MONTH(NOW()) FROM DUAL;
+SELECT DAY(NOW()) FROM DUAL;
+SELECT YEAR('2001-12-29') FROM DUAL;
+-- UNIX_TIMESTAMP() 返回的是 1970-1-1 到现在的毫秒数
+SELECT UNIX_TIMESTAMP() / (24*3600*365) FROM DUAL;
+
+-- FROM_UNIXTIME() 可以把一个 UNIX_TIMESTAMP 秒数，转成指定格式的日期
+SELECT FROM_UNIXTIME(1617473484, '%Y-%m-%d') FROM DUAL;
+
+SELECT FROM_UNIXTIME(1617473484, '%Y-%m-%d %H:%i:%s') FROM DUAL;

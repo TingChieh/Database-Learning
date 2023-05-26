@@ -1,0 +1,14 @@
+-- 如果没有指定 unsinged, 则 TINYINT 就是有符号
+-- 用 TINYINT 来演示范围 有符号 -128 ~ 127 如果没有符号 0~255
+
+USE db002;
+CREATE TABLE t3 (
+    id TINYINT
+);
+CREATE TABLE t4 (
+    id TINYINT UNSIGNED
+);
+INSERT INTO t3 VALUES(-128);
+INSERT INTO t4 VALUES(0);
+SELECT * FROM t3;
+SELECT * FROM t4;
